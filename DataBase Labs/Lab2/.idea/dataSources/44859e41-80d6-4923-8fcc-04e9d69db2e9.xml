@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="MySQL - downloads@localhost">
+  <database-model serializer="dbm" rdbms="MYSQL" format-version="2.6">
+    <schema id="1" name="downloads">
+      <visible>1</visible>
+    </schema>
+    <schema id="2" name="information_schema"/>
+    <schema id="3" name="mysql"/>
+    <schema id="4" name="performance_schema"/>
+    <schema id="5" name="sys"/>
+    <table id="6" parent="1" name="app"/>
+    <table id="7" parent="1" name="developer"/>
+    <table id="8" parent="1" name="download"/>
+    <table id="9" parent="1" name="user"/>
+    <column id="10" parent="6" name="app_id">
+      <mandatory>1</mandatory>
+      <data-type>int(10) unsigned|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="11" parent="6" name="dev_id">
+      <mandatory>1</mandatory>
+      <data-type>int(10) unsigned|0</data-type>
+    </column>
+    <column id="12" parent="6" name="name">
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="13" parent="6" name="price">
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="14" parent="6" name="memory">
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <key id="15" parent="6" name="PRIMARY">
+      <columns>app_id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="16" parent="7" name="dev_id">
+      <mandatory>1</mandatory>
+      <data-type>int(10) unsigned|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="17" parent="7" name="name">
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="18" parent="7" name="company">
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <key id="19" parent="7" name="PRIMARY">
+      <columns>dev_id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="20" parent="8" name="app_id">
+      <mandatory>1</mandatory>
+      <data-type>int(10) unsigned|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="21" parent="8" name="user_id">
+      <mandatory>1</mandatory>
+      <data-type>int(10) unsigned|0</data-type>
+    </column>
+    <column id="22" parent="8" name="date_time">
+      <mandatory>1</mandatory>
+      <data-type>datetime|0</data-type>
+    </column>
+    <key id="23" parent="8" name="PRIMARY">
+      <columns>app_id</columns>
+      <primary>1</primary>
+    </key>
+    <column id="24" parent="9" name="user_id">
+      <mandatory>1</mandatory>
+      <data-type>int(10) unsigned|0</data-type>
+      <sequence-identity>1</sequence-identity>
+    </column>
+    <column id="25" parent="9" name="name">
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="26" parent="9" name="e-mail">
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <column id="27" parent="9" name="phone">
+      <data-type>varchar(50)|0</data-type>
+    </column>
+    <key id="28" parent="9" name="PRIMARY">
+      <columns>user_id</columns>
+      <primary>1</primary>
+    </key>
+  </database-model>
+</dataSource>
