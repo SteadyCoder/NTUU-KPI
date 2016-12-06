@@ -99,7 +99,7 @@ DROP TABLE IF EXISTS `user`;
 CREATE TABLE `user` (
   `user_id` int(10) unsigned NOT NULL AUTO_INCREMENT,
   `name` varchar(50) DEFAULT NULL,
-  `e-mail` varchar(50) DEFAULT NULL,
+  `e_mail` varchar(50) DEFAULT NULL,
   `phone` varchar(50) DEFAULT NULL,
   PRIMARY KEY (`user_id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8;

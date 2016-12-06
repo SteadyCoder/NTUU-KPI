@@ -1,7 +1,8 @@
 {% extends 'Laba2/base.html' %}
 {% load bootstrap3 %}
+
 {% block title %}
-    <div class="page-header"> <h2 style="text-align:center;"> Downloads Table </h2> </div>
+    <div class="page-header"> <h2 style="text-align:center;"> Users Table </h2> </div>
 {% endblock %}
 
 
@@ -10,21 +11,24 @@
 <table class="table table-bordered">
   <thead>
     <tr class="active">
-      <th>App ID</th>
-      <th>User ID</th>
-      <th>Data time</th>
+        <th>User ID</th>
+        <th>Name</th>
+        <th>E-mail</th>
+        <th>Phone</th>
     </tr>
   </thead>
   <tbody>
-    {% for foo in downloads %}
+    {% for foo in users %}
         <tr>
-            <td> {{ foo.app_id }} </td>
             <td> {{ foo.user_id }} </td>
-            <td> {{ foo.date_time }} </td>
+            <td> {{ foo.name }} </td>
+            <td> {{ foo.e_mail }} </td>
+            <td> {{ foo.phone }} </td>
         </tr>
     {% endfor %}
   </tbody>
 
 </table>
+
 
 {% endblock %}

@@ -3,79 +3,23 @@ import json
 import MySQLdb as mdb
 
 from datetime import time, timedelta
-'''
-class DownloadController(object):
-    def __init__(self, table_name):
-        self.table_name = table_name
 
-
-    def get_all_downloads(self):
-        return 0
-
-    def get_download_with_id(self, app_id):
-        return app_id
-
-    def get_download_with_condition(self, condition):
-        return condition
-
-class AppController(object):
-    def __init__(self, table_name):
-        self.table_name = table_name
-
-    def get_all_apps(self):
-        return 0
-
-    def get_app_with_id(self, app_id):
-        return app_id
-
-    def get_app_with_condition(self, condition):
-        return condition
-
-class DeveloperConrtoller(object):
-    def __init__(self, table_name):
-        self.table_name = table_name
-
-    def get_all_developers(self):
-        return 0
-
-    def get_developer_with_id(self, dev_id):
-        return dev_id
-
-    def get_developer_with_condition(self, condition):
-        return condition
-
-class UserController(object):
-    def __init__(self, table_name):
-        self.talbe_name = table_name
-'''
 
 class AbstractController(object):
     __host__ = 'localhost'
     __user__ = 'root'
-    __password__ = ''
+    __password__ = '1111'
     __db__ = 'downloads'
 
     def __init__(self, table_name, columns):
         self.table_name = table_name
         self.columns = columns
 
-    def get_all(self):
-        try:
-            connect = mdb.connect(self.__host__, self.__user__, self.__password__, self.__db__)
-            cursor = connnect.cursor(mdb.cursors.DictCusror)
-            cursor.execute("select * from %s;" %self.table_name)
-            result = cursor.fetchall()
-            return result
-        except mdb.Error, e:
-            print "Error %d, %s" %(e.args[0], e.args[1])
-        finally:
-            if connect:
-                connect.close()
-
+# **** Get operation with condition****
     def get_with_condition(self, condition):
         try:
-            connect = mdb.connect(self.__host__, self.__user__, self.__password__, self.__db__)
-            cursor = connect.cursor(mdb.cursors.DictCusror)
+            con = mdb.connect(self.__host__, self.__user__, self.__password__, self.__db__)
+            cursor = con.cursor(mdb.cursors.DictCursor)
             request = "select * from " + self.table_name + " " + condition + ";"
             cursor.execute(request)
             result = cursor.fetchall()
@@ -83,9 +27,12 @@ class AbstractController(object):
         except mdb.Error, e:
             print "Error %d, %s" %(e.args[0], e.args[1])
         finally:
-            if connect:
-                connect.close()
+            if con:
+                con.close()
+# **************************
 
+
+# **** Delete operation ****
     def delete(self, condition):
         try:
             connect = mdb.connect(self.__host__, self.__user__, self.__password__, self.__db__)
@@ -98,7 +45,9 @@ class AbstractController(object):
         finally:
             if connect:
                 connect.close()
+# **************************
 
+# **** Insert operation ****
     def insert(self, row):
         try:
             connect = mdb.connect(self.__host__, self.__user__, self.__password__, self.__db__)
@@ -116,7 +65,11 @@ class AbstractController(object):
         finally:
             if connect:
                 connect.close()
+# **************************
 
+
+
+# **** Update some row ****
     def update(self, row, id, condition):
         try:
             connect = mdb.connect(self.__host__, self.__user__, self.__password__, self.__db__)
@@ -136,6 +89,106 @@ class AbstractController(object):
         finally:
             if connect:
                 connect.close()
+
+# **************************
+
+# **** Get operation ****
+    def get_all(self):
+        return self.get_with_condition("")
+
+    def get_by_id(self, id):
+        return self.get_with_condition("WHERE id = " + str(id))[0]
+
+    def delete_all(self):
+        self.delete("")
+
+    def delete_by_id(self, id):
+        self.delete("WHERE id = " + str(id))
+# **************************
+
+    def load(self, file_name):
+        try:
+            connect = mdb.connect(self.__host__, self.__user__, self.__password__, self.__db__)
+            cursor = connect.cursor()
+            file_name = '~/Developer/NTUU-KPI/DataBase\ Labs/Lab2/Database/' + file_name
+            cursor.execute("LOAD DATA INFILE " + "'" + file_name + "'" + " INTO TABLE " + self.table_name +
+                           " FIELDS TERMINATED BY ',' LINES TERMINATED BY '\n'")
+            connect.commit()
+        except mdb.Error as e:
+            print "Error %d, %s" % (e.args[0], e.args[1])
+        finally:
+            if connect:
+                connect.close()
+# **************************
+
+
+# ***** Downloadcontroller ******
+class DownloadController(AbstractController):
+    def __init__(self, table_name):
+        self.table_name = table_name
+        columns = ["app_id", "user_id", "date_time"]
+        super(DownloadController, self).__init__(self.table_name, columns)
+
+    def get_all_downloads(self):
+        return super(DownloadController, self).get_all()
+
+    def get_download_with_id(self, download_id):
+        return super(DownloadController, self).get_by_id(download_id)
+
+    def get_download_with_condition(self, condition):
+        return super(DownloadController, self).get_with_condition(condition)
+# **************************
+
+# ***** App controller ******
+class AppController(AbstractController):
+    def __init__(self, table_name):
+        self.table_name = table_name
+        columns = ["app_id", "dev_id", "name", "price", "memory"]
+        super(AppController, self).__init__(self.table_name, columns)
+
+    def get_all_apps(self):
+        return super(AppController, self).get_all()
+
+    def get_apps_with_id(self, app_id):
+        return super(AppController, self).get_by_id(app_id)
+
+    def get_apps_with_condition(self, condition):
+        return super(AppController, self).get_with_condition(condition)
+# **************************
+
+# ***** User controller ******
+class UserController(AbstractController):
+    def __init__(self, table_name):
+        self.table_name = table_name
+        columns = ["user_id", "name", "e_mail", "phone"]
+        super(UserController, self).__init__(self.table_name, columns)
+
+    def get_all_users(self):
+        return super(UserController, self).get_all()
+
+    def get_user_with_id(self, user_id):
+        return super(UserController, self).get_by_id(user_id)
+
+    def get_user_with_condition(self, condition):
+        return super(UserController, self).get_with_condition(condition)
+# **************************
+
+# ***** Developer controller ******
+class DeveloperConrtoller(AbstractController):
+    def __init__(self, table_name):
+        self.table_name = table_name
+        columns = ["dev_id", "name", "company"]
+        super(DeveloperConrtoller, self).__init__(self.table_name, columns)
+
+    def get_all_developers(self):
+        return super(DeveloperConrtoller, self).get_all()
+
+    def get_developer_with_id(self, dev_id):
+        return super(DeveloperConrtoller, self).get_by_id(dev_id)
+
+    def get_developer_with_condition(self, condition):
+        return super(DeveloperConrtoller, self).get_with_condition(condition)
+# **************************
 
 
 class Download(object):

@@ -1,22 +1,26 @@
 from django.shortcuts import render
 
-from django.contrib import  messages
 from django.http import HttpResponse
-from django.views.generic.base import TemplateView
+from .custom_models import DownloadController, AppController, DeveloperConrtoller, UserController
 
-# Create your views here.
+downloadController = DownloadController("download")
+appController = AppController("app")
+developerController = DeveloperConrtoller("developer")
+userController = UserController("user")
 
-class HomePageView(TemplateView):
-    template_name = "Laba2/home.html"
+downloadController.load('downloads.csv')
+appController.load('apps.csv')
+developerController.load('developer.csv')
+userController.load('users.csv')
 
-    def get_context_data(self, **kwargs):
-        context = super(HomePageView, self).get_context_data(**kwargs)
-        # messages.info(self.request, 'http://localhost:8000')
-        return context
+def index(request):
+    return  HttpResponse("Hello")
 
-class DownloadsTable(TemplateView):
-    template_name = "Laba2/downloads_table.html"
+def home(request):
+    return render(request, "Laba2/home.html", {'downloads': downloadController.get_all_downloads()})
 
-    def get_context_data(self, **kwargs):
-        context = super(DownloadsTable, self).get_context_data(**kwargs)
-        return context
+def apps_show(request):
+    return render(request, "Laba2/apps_table.html", {'apps': appController.get_all_apps()})
+
+def users_show(request):
+    return render(request, "Laba2/users_table.html", {'users': userController.get_all_users()})
