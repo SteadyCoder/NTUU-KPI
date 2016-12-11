@@ -6,31 +6,32 @@
 {% endblock %}
 
 {% block content %}
+<div class="form-group col-sm-offset-1" style="width:1050px;">
 
-<table class="table table-bordered">
-  <thead>
-    <tr class="active">
-        <th>App ID</th>
-        <th>Dev ID</th>
-        <th>Name</th>
-        <th>Price</th>
-        <th>Memory</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for foo in apps %}
-        <tr class="clickable-row" data-href = "{% url 'edit' foo.app_id %}">
-            <td> {{ foo.app_id }} </td>
-            <td> {{ foo.dev_id }} </td>
-            <td> {{ foo.name }} </td>
-            <td> {{ foo.price }} </td>
-            <td> {{ foo.memory }} </td>
+    <table class="table table-bordered">
+      <thead>
+        <tr class="active">
+            <th>App ID</th>
+            <th>Dev ID</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th>Memory</th>
         </tr>
-    {% endfor %}
-  </tbody>
+      </thead>
+      <tbody>
+        {% for foo in apps %}
+            <tr class="clickable-row" data-href = "{% url 'edit_apps' foo.app_id %}">
+                <td> {{ foo.app_id }} </td>
+                <td> {{ foo.dev_id }} </td>
+                <td> {{ foo.name }} </td>
+                <td> {{ foo.price }} </td>
+                <td> {{ foo.memory }} </td>
+            </tr>
+        {% endfor %}
+      </tbody>
 
-</table>
-
+    </table>
+    <a type="button" class="btn btn-primary" name="add_button" href="{% url 'app_new' %}">Add</a>
     <script>
     jQuery(document).ready(function($) {
         $(".clickable-row").click(function () {
@@ -38,5 +39,6 @@
         });
     });
     </script>
+</div>
 
 {% endblock %}

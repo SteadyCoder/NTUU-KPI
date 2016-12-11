@@ -9,16 +9,15 @@
     {% block content %}
 
     <form role="form" action = {{ request.get_full_path }} method="post">
+        <div class="form-group col-sm-offset-2 " style="width:864px;">
         {% csrf_token %}
-
+        {% bootstrap_form form %}
         {% if add_object %}
-            <button type="submit" class="btn btn-primary date_margin">Submit</button>
+            <button type="submit" class="btn btn-primary date_margin" name="add_button">Submit</button>
 
         {% else %}
-            <div class="form-group col-sm-offset-2 " style="width:864px;">
-                {% bootstrap_form form %}
-                <button type="submit" class="btn btn-primary date_margin">Save</button>
-                <button type="submit" class="btn btn-primary date_margin">Delete</button>
+                <button type="submit" class="btn btn-primary date_margin" name="edit_btn">Save</button>
+                <button type="submit" class="btn btn-primary date_margin" name="delete_btn">Delete</button>
             </div>
 
         {% endif %}

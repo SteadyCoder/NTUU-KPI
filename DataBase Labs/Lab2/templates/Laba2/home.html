@@ -6,26 +6,30 @@
 
 
 {% block content %}
-
-<table class="table table-bordered">
-  <thead>
-    <tr class="active">
-      <th>App ID</th>
-      <th>User ID</th>
-      <th>Data time</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for foo in downloads %}
-        <tr class="clickable-row" data-href = "{% url 'edit' foo.app_id %}">
-            <td> {{ foo.app_id }} </td>
-            <td> {{ foo.user_id }} </td>
-            <td> {{ foo.date_time }} </td>
+<div class="form-group col-sm-offset-1" style="width:1050px;">
+    <table class="table table-bordered">
+      <thead>
+        <tr class="active">
+          <th>App ID</th>
+          <th>User ID</th>
+          <th>Data time</th>
         </tr>
-    {% endfor %}
-  </tbody>
+      </thead>
+      <tbody>
+        {% for foo in downloads %}
+            <tr class="clickable-row" data-href = "{% url 'edit_downloads' foo.app_id %}">
+                <td> {{ foo.app_id }} </td>
+                <td> {{ foo.user_id }} </td>
+                <td> {{ foo.date_time }} </td>
+            </tr>
+        {% endfor %}
+      </tbody>
 
-</table>
+    </table>
+
+
+    <a type="button" class="btn btn-primary" name="add_button" href="{% url  'download_new' %}">Add</a>
+</div>
 
 <script>
     jQuery(document).ready(function($) {

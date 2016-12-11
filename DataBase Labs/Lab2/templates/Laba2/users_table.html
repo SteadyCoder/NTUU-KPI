@@ -7,28 +7,38 @@
 
 
 {% block content %}
-
-<table class="table table-bordered">
-  <thead>
-    <tr class="active">
-        <th>User ID</th>
-        <th>Name</th>
-        <th>E-mail</th>
-        <th>Phone</th>
-    </tr>
-  </thead>
-  <tbody>
-    {% for foo in users %}
-        <tr>
-            <td> {{ foo.user_id }} </td>
-            <td> {{ foo.name }} </td>
-            <td> {{ foo.e_mail }} </td>
-            <td> {{ foo.phone }} </td>
+<div class="form-group col-sm-offset-1" style="width:1050px;">
+    <table class="table table-bordered">
+      <thead>
+        <tr class="active">
+            <th>User ID</th>
+            <th>Name</th>
+            <th>E-mail</th>
+            <th>Phone</th>
         </tr>
-    {% endfor %}
-  </tbody>
+      </thead>
+      <tbody>
+        {% for foo in users %}
+            <tr class="clickable-row" data-href = "{% url 'edit_users' foo.user_id %}">
+                <td> {{ foo.user_id }} </td>
+                <td> {{ foo.name }} </td>
+                <td> {{ foo.e_mail }} </td>
+                <td> {{ foo.phone }} </td>
+            </tr>
+        {% endfor %}
+      </tbody>
 
-</table>
+    </table>
 
+    <a type="button" class="btn btn-primary" name="add_button" href="{% url  'user_new' %}">Add</a>
+
+    <script>
+    jQuery(document).ready(function($) {
+        $(".clickable-row").click(function () {
+            window.document.location = $(this).data("href");
+        });
+    });
+    </script>
+</div>
 
 {% endblock %}

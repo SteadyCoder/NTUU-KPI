@@ -36,7 +36,7 @@ class AbstractController(object):
     def delete(self, condition):
         try:
             connect = mdb.connect(self.__host__, self.__user__, self.__password__, self.__db__)
-            cursor = connect.cursor(mdb.cursors.DictCusror)
+            cursor = connect.cursor()
             request = "delete from " + self.table_name + " " + condition + ";"
             cursor.execute(request)
             connect.commit()
@@ -51,13 +51,17 @@ class AbstractController(object):
     def insert(self, row):
         try:
             connect = mdb.connect(self.__host__, self.__user__, self.__password__, self.__db__)
-            cursor = connect.cursor(mdb.cursors.DictCusror)
+            cursor = connect.cursor()
             request = "insert into " + self.table_name + "("
-            values = "values("
+            values = "values('"
             for column in self.columns:
                 request += column + ", "
-                values += str(row[column]) + ", "
-            request += ")" + values + ";"
+                values += str(row[column]) + "', '"
+
+            request = request[0:-2]
+            values = values[0:-3]
+            request += ") " + values + ");"
+
             cursor.execute(request)
             connect.commit()
         except mdb.Error, e:
@@ -76,19 +80,16 @@ class AbstractController(object):
             cur = connect.cursor()
             request = "update " + self.table_name + " set "
 
-
             for column in self.columns:
-                print "request ",  request
                 request += column + "= '" + str(row[column]) + "', "
 
             request = request[0:len(request) - 2]
-            print request
+
             if condition is not None:
                 request += condition + " ;"
             else:
                 request += " where %s = %s;" %(self.columns[0], id)
 
-            print 'last ', request
             cur.execute(request)
             connect.commit()
         except mdb.Error, e:
@@ -110,7 +111,7 @@ class AbstractController(object):
         self.delete("")
 
     def delete_by_id(self, id):
-        self.delete("WHERE id = " + str(id))
+        self.delete("WHERE " + self.columns[0] + " = " + str(id))
 # **************************
 
     def load(self, file_name):
@@ -144,6 +145,9 @@ class DownloadController(AbstractController):
 
     def get_download_with_condition(self, condition):
         return super(DownloadController, self).get_with_condition(condition)
+
+    def get_choice_lst(self):
+        return tuple(tuple([obj["app_id"], obj["user_id"]]) for obj in self.get_all_downloads())
 
 
 # **************************
@@ -180,6 +184,9 @@ class UserController(AbstractController):
 
     def get_user_with_condition(self, condition):
         return super(UserController, self).get_with_condition(condition)
+
+    def get_choice_lst(self):
+        return tuple(tuple([obj["user_id"], obj["name"]]) for obj in self.get_all_users())
 # **************************
 
 # ***** Developer controller ******
@@ -197,6 +204,9 @@ class DeveloperConrtoller(AbstractController):
 
     def get_developer_with_condition(self, condition):
         return super(DeveloperConrtoller, self).get_with_condition(condition)
+
+    def get_choice_lst(self):
+        return tuple(tuple([obj["dev_id"], obj["name"]]) for obj in self.get_all_developers())
 # **************************
 
 
