@@ -70,19 +70,26 @@ class AbstractController(object):
 
 
 # **** Update some row ****
-    def update(self, row, id, condition):
+    def update(self, id, row, condition = None):
         try:
             connect = mdb.connect(self.__host__, self.__user__, self.__password__, self.__db__)
-            cursor = connect.cursor(mdb.cursors.DictCusror)
+            cur = connect.cursor()
             request = "update " + self.table_name + " set "
-            for key in row:
-                request += key + " = " + row[key]
-            if condition:
+
+
+            for column in self.columns:
+                print "request ",  request
+                request += column + "= '" + str(row[column]) + "', "
+
+            request = request[0:len(request) - 2]
+            print request
+            if condition is not None:
                 request += condition + " ;"
             else:
-                request += "where %s = %d;" %(self.columns[0], id)
+                request += " where %s = %s;" %(self.columns[0], id)
 
-            cursor.execute(request)
+            print 'last ', request
+            cur.execute(request)
             connect.commit()
         except mdb.Error, e:
             print "Error %d, %s" %(e.args[0], e.args[1])
@@ -97,7 +104,7 @@ class AbstractController(object):
         return self.get_with_condition("")
 
     def get_by_id(self, id):
-        return self.get_with_condition("WHERE id = " + str(id))[0]
+        return self.get_with_condition("WHERE " + self.columns[0] + " = " + str(id))[0]
 
     def delete_all(self):
         self.delete("")
@@ -137,6 +144,8 @@ class DownloadController(AbstractController):
 
     def get_download_with_condition(self, condition):
         return super(DownloadController, self).get_with_condition(condition)
+
+
 # **************************
 
 # ***** App controller ******

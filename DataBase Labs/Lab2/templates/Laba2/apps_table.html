@@ -5,7 +5,6 @@
     <div class="page-header"> <h2 style="text-align:center;"> Apps Table </h2> </div>
 {% endblock %}
 
-
 {% block content %}
 
 <table class="table table-bordered">
@@ -20,7 +19,7 @@
   </thead>
   <tbody>
     {% for foo in apps %}
-        <tr>
+        <tr class="clickable-row" data-href = "{% url 'edit' foo.app_id %}">
             <td> {{ foo.app_id }} </td>
             <td> {{ foo.dev_id }} </td>
             <td> {{ foo.name }} </td>
@@ -32,5 +31,12 @@
 
 </table>
 
+    <script>
+    jQuery(document).ready(function($) {
+        $(".clickable-row").click(function () {
+            window.document.location = $(this).data("href");
+        });
+    });
+    </script>
 
 {% endblock %}

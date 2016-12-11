@@ -17,7 +17,7 @@
   </thead>
   <tbody>
     {% for foo in downloads %}
-        <tr>
+        <tr class="clickable-row" data-href = "{% url 'edit' foo.app_id %}">
             <td> {{ foo.app_id }} </td>
             <td> {{ foo.user_id }} </td>
             <td> {{ foo.date_time }} </td>
@@ -26,5 +26,13 @@
   </tbody>
 
 </table>
+
+<script>
+    jQuery(document).ready(function($) {
+        $(".clickable-row").click(function () {
+            window.document.location = $(this).data("href");
+        });
+    });
+</script>
 
 {% endblock %}
