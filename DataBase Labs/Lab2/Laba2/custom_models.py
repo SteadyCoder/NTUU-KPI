@@ -128,6 +128,19 @@ class AbstractController(object):
             if connect:
                 connect.close()
 # **************************
+    def full_text_search(self, condition):
+        try:
+            connect = mdb.connect(self.__host__, self.__user__, self.__password__, self.__db__)
+            cursor = connect.cursor(mdb.cursors.DictCursor)
+            cursor.execute('SELECT * FROM ' + self.table_name + ' ' + condition)
+            return cursor.fetchall()
+        except mdb.Error as e:
+            print 'ERROR %d %s' % (e.args[0], e.args[1])
+        finally:
+            if connect:
+                connect.close()
+
+# **************************
 
 
 # ***** Downloadcontroller ******
@@ -149,6 +162,8 @@ class DownloadController(AbstractController):
     def get_choice_lst(self):
         return tuple(tuple([obj["app_id"], obj["user_id"]]) for obj in self.get_all_downloads())
 
+    def full_text_search(self, condition):
+        return super(DownloadController, self).full_text_search(condition)
 
 # **************************
 
@@ -167,6 +182,9 @@ class AppController(AbstractController):
 
     def get_apps_with_condition(self, condition):
         return super(AppController, self).get_with_condition(condition)
+
+    def get_choice_lst(self):
+        return tuple(tuple([obj["app_id"], obj["name"]]) for obj in self.get_all_apps())
 # **************************
 
 # ***** User controller ******

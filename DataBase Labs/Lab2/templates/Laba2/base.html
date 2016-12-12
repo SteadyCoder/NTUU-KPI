@@ -54,6 +54,22 @@
                 <a href="{% url 'users' %}">Users Table</a>
             </li>
           </ul>
+          <form class="navbar-form navbar-left" method="GET">
+            <div class="input-group">
+                <input type="text" class="form-control" name="search" placeholder="Search">
+                <div class="input-group-btn">
+                    <button class="btn btn-default" type="submit">
+                        <i class="glyphicon glyphicon-search"></i>
+                    </button>
+                </div>
+            </div>
+            <label class="radio-inline">
+            <input type="radio" name="optradio" value="include" checked="">Include word
+            </label>
+            <label class="radio-inline">
+            <input type="radio" name="optradio" value="exclude" > by phrase
+            </label>
+          </form>
         </div>
 
       </div>
