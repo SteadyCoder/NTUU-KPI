@@ -17,26 +17,34 @@ def index(request):
     return HttpResponse("Works")
 
 def home(request):
-    if ('search' in request.GET) and (request.GET != ''):
-        key_words = request.GET['search']
-        condition = "WHERE MATCH (name) AGAINST ('"
-        if request.GET.get('optradio', None) == 'include':
-            key_words = " ".join(['+' + item for item in key_words.split()])
-            condition += key_words
-        else:
-            condition += "\"" + key_words + "\""
-
-        condition += "' IN BOOLEAN MODE);"
-        downloads = downloadController. full_text_search(condition)
-        result = tuple()
-        for record in downloads:
-            result += downloadController.get_download_with_condition("WHERE client_id=" + str(record["id"]))
-    else:
-        result = {'downloads': downloadController.get_all_downloads(), 'users': userController }
+    result = {'downloads': downloadController.get_all_downloads(), 'users': userController}
     return render(request, "Laba2/home.html", result)
 
 def apps_show(request):
-    return render(request, "Laba2/apps_table.html", {'apps': appController.get_all_apps()})
+    if ('search' in request.GET) and (request.GET != ''):
+        key_words = request.GET['search']
+        condition = "WHERE MATCH "
+        if request.GET.get('optradio', None) == 'price':
+            condition += "(price) AGAINST ('"
+            key_words = " ".join([item for item in key_words.split()])
+            condition += key_words
+        else:
+            condition += "(name) AGAINST ('"
+            key_words = " ".join(['+' + item for item in key_words.split()])
+            condition += key_words
+            # condition += "\"" + key_words + "\""
+
+        condition += "' IN BOOLEAN MODE);"
+        apps = appController.full_text_search(condition)
+        res = tuple()
+        if apps:
+            for record in apps:
+                res += appController.get_apps_with_condition("WHERE app_id =" + str(record["app_id"]))
+        result = {'apps': res}
+    else:
+        result = {'apps': appController.get_all_apps()}
+    print result
+    return render(request, "Laba2/apps_table.html", result)
 
 def users_show(request):
     return render(request, "Laba2/users_table.html", {'users': userController.get_all_users()})
@@ -115,7 +123,8 @@ def download_new(request):
 
 def app_new(request):
     if request.method == 'POST':
-        row = {"app_id": request.POST["app_id"], "dev_id": request.POST["dev_id"],
+        tmp = appController.get_all_apps()
+        row = {"app_id": tmp[len(tmp) - 1]["app_id"] + 1, "dev_id": request.POST["dev_id"],
                "name": request.POST["name"], "price": request.POST["price"], "memory": request.POST["memory"]}
         appController.insert(row)
         return HttpResponseRedirect('/apps')

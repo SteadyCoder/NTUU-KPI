@@ -132,7 +132,9 @@ class AbstractController(object):
         try:
             connect = mdb.connect(self.__host__, self.__user__, self.__password__, self.__db__)
             cursor = connect.cursor(mdb.cursors.DictCursor)
-            cursor.execute('SELECT * FROM ' + self.table_name + ' ' + condition)
+            query = 'SELECT * FROM ' + self.table_name + ' ' + condition
+            print query
+            cursor.execute(query)
             return cursor.fetchall()
         except mdb.Error as e:
             print 'ERROR %d %s' % (e.args[0], e.args[1])
@@ -185,6 +187,9 @@ class AppController(AbstractController):
 
     def get_choice_lst(self):
         return tuple(tuple([obj["app_id"], obj["name"]]) for obj in self.get_all_apps())
+
+    def full_text_search(self, condition):
+        return super(AppController, self).full_text_search(condition)
 # **************************
 
 # ***** User controller ******
