@@ -23,18 +23,16 @@ def home(request):
 def apps_show(request):
     if ('search' in request.GET) and (request.GET != ''):
         key_words = request.GET['search']
-        condition = "WHERE MATCH "
+        condition = ""
         if request.GET.get('optradio', None) == 'price':
-            condition += "(price) AGAINST ('"
-            key_words = " ".join([item for item in key_words.split()])
-            condition += key_words
+            condition += "WHERE price LIKE '%" + " ".join([item for item in key_words.split()]) + "%'"
         else:
+            condition += "WHERE MATCH "
             condition += "(name) AGAINST ('"
             key_words = " ".join(['+' + item for item in key_words.split()])
             condition += key_words
-            # condition += "\"" + key_words + "\""
+            condition += "' IN BOOLEAN MODE);"
 
-        condition += "' IN BOOLEAN MODE);"
         apps = appController.full_text_search(condition)
         res = tuple()
         if apps:
