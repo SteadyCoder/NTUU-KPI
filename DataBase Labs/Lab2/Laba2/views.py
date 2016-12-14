@@ -29,7 +29,7 @@ def apps_show(request):
         else:
             condition += "WHERE MATCH "
             condition += "(name) AGAINST ('"
-            key_words = " ".join(['+' + item for item in key_words.split()])
+            key_words = " ".join([' +' + item for item in key_words.split()])
             condition += key_words
             condition += "' IN BOOLEAN MODE);"
 
