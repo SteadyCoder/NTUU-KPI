@@ -1,7 +1,3 @@
-//
-// Created by vpodilnyk on 17.12.16.
-//
-
 #include "KochSnowflake.h"
 
 void KochSnowflake::kochFractal(std::list<Line*> &lines) {

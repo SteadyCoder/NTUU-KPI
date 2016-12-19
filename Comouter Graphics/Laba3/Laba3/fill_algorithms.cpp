@@ -10,8 +10,10 @@ void draw_point(sf::Image &screen, int x, int y, int size) {
   int y_n = y + size;
   for (int i = x; i <= x_n; ++i)
     for (int j = y; j <= y_n; ++j)
-      screen.setPixel((unsigned)i, (unsigned)j, sf::Color(150, 15, 200));
+        screen.setPixel((unsigned)i, (unsigned)j, sf::Color::Green);
 }
+
+// sf::Color(150, 15, 200)
 
 void draw_img(sf::RenderWindow &window, sf::Image &screen) {
   sf::Texture texture;
@@ -117,10 +119,10 @@ void scan_line(sf::RenderWindow &window, sf::Image &screen, std::vector<sf::Vect
 
     points.clear();
     for (int j = min.x; j <= max.x; ++j) {
-      if (screen.getPixel((unsigned int) j, (unsigned int) i) == sf::Color(150, 15, 200)) {
+      if (screen.getPixel((unsigned int) j, (unsigned int) i) == sf::Color::Green) {
         points.push_back(sf::Vector2i(j, i));
-        while (screen.getPixel((unsigned int) j, (unsigned int) i) != sf::Color(0, 0, 0))
-          ++j;
+          while (screen.getPixel((unsigned int) j, (unsigned int) i) != sf::Color::Black)
+              ++j;
       }
     }
 
@@ -135,7 +137,7 @@ void scan_line(sf::RenderWindow &window, sf::Image &screen, std::vector<sf::Vect
       }
     }
 
-    while (!points.empty() and points.size()%2 == 0 ) {
+    while (!points.empty() and points.size() % 2 == 0 ) {
       end_point = points.back();
       points.pop_back();
       start_point = points.back();
@@ -200,12 +202,12 @@ void xor_line(sf::RenderWindow &window, sf::Image &screen, sf::Vector2i first, s
   char current_point, next_point;
   int y = first.y;
   for (int i = first.x; i != second.x ; ++i) {
-    if (screen.getPixel((unsigned int)i, (unsigned int)y) == sf::Color(150, 15, 200))
+    if (screen.getPixel((unsigned int)i, (unsigned int)y) == sf::Color::Green)
       current_point = 1;
     else
       current_point = 0;
 
-    if (screen.getPixel((unsigned int)i + 1, (unsigned int)y) == sf::Color(150, 15, 200))
+    if (screen.getPixel((unsigned int)i + 1, (unsigned int)y) == sf::Color::Green)
       next_point = 1;
     else
       next_point = 0;

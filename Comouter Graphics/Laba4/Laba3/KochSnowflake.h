@@ -1,6 +1,3 @@
-//
-// Created by vpodilnyk on 17.12.16.
-//
 
 #ifndef GRAPHICS4_KOCHSNOWFLAKE_H
 #define GRAPHICS4_KOCHSNOWFLAKE_H

@@ -188,6 +188,9 @@ class AppController(AbstractController):
     def get_choice_lst(self):
         return tuple(tuple([obj["app_id"], obj["name"]]) for obj in self.get_all_apps())
 
+    def get_price_lst(self):
+        return tuple(tuple([obj["app_id"], float(obj["price"])]) for obj in self.get_all_apps())
+
     def full_text_search(self, condition):
         return super(AppController, self).full_text_search(condition)
 # **************************

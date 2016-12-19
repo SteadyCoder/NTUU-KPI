@@ -24,14 +24,11 @@ def apps_show(request):
     if ('search' in request.GET) and (request.GET != ''):
         key_words = request.GET['search']
         condition = ""
-        if request.GET.get('optradio', None) == 'price':
-            condition += "WHERE price LIKE '%" + " ".join([item for item in key_words.split()]) + "%'"
-        else:
-            condition += "WHERE MATCH "
-            condition += "(name) AGAINST ('"
-            key_words = " ".join([' +' + item for item in key_words.split()])
-            condition += key_words
-            condition += "' IN BOOLEAN MODE);"
+        condition += "WHERE MATCH "
+        condition += "(name) AGAINST ('"
+        key_words = " ".join([' +' + item for item in key_words.split()])
+        condition += key_words
+        condition += "' IN BOOLEAN MODE);"
 
         apps = appController.full_text_search(condition)
         res = tuple()
@@ -39,9 +36,17 @@ def apps_show(request):
             for record in apps:
                 res += appController.get_apps_with_condition("WHERE app_id =" + str(record["app_id"]))
         result = {'apps': res}
+    elif ('prices' in request.GET) and (request.GET != ''):
+        print 'prices'
+        key_prices = request.GET['prices']
+        print key_prices
+        condition = ""
+        if (key_prices):
+            condition = "WHERE price IN (" + key_prices + ");"
+            res = appController.get_apps_with_condition(condition)
+        result = {'apps': res}
     else:
         result = {'apps': appController.get_all_apps()}
-    print result
     return render(request, "Laba2/apps_table.html", result)
 
 def users_show(request):

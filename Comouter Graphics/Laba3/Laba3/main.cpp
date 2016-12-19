@@ -17,7 +17,7 @@ int main() {
         
         while (window.pollEvent(event))
             
-            if (event.type == sf::Event::Closed)
+        if (event.type == sf::Event::Closed)
                 window.close();
         
         if (event.type == sf::Event::MouseMoved and sf::Keyboard::isKeyPressed(sf::Keyboard::R)) {
@@ -68,7 +68,7 @@ int main() {
             }
             //screen.create(width, height);
             scan_line(window, screen, vertex, max, min);
-            //                xor_fill(window, screen, vertex, max, min);
+            // xor_fill(window, screen, vertex, max, min);
             vertex.clear();
         }
         window.display();

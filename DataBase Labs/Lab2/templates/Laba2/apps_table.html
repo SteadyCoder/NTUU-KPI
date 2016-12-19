@@ -7,7 +7,6 @@
 
 {% block content %}
 
-
 <div class="form-group col-sm-offset-1" style="width:1050px;">
     <form class="navbar-form navbar-left" method="GET">
         <div class="input-group">
@@ -19,9 +18,24 @@
             </div>
         </div>
         <label class="radio-inline">
-        <input type="radio" name="optradio" value="price" checked="">By price</label>
-        <label class="radio-inline">
         <input type="radio" name="optradio" value="name" >By name</label>
+    </form>
+
+    <form class="navbar-form navbar-left" method="GET">
+        <div class="input-group">
+            <input type="text" class="form-control" name="prices" placeholder="Empty">
+            <div class="input-group-btn">
+                <button class="btn btn-primary" type="submit">
+                    <i class="glyphicon glyphicon-search"></i>
+                </button>
+            </div>
+        </div>
+        <label class="checkbox-inline">
+        <input  type="checkbox" name="small" value="small">0.00</label>
+        <label class="checkbox-inline">
+        <input type="checkbox" name="middle" value="middle">1.25</label>
+        <label class="checkbox-inline">
+        <input type="checkbox" name="high" value="high" >1.99</label>
     </form>
 
     {% if apps %}
@@ -59,6 +73,48 @@
     jQuery(document).ready(function($) {
         $(".clickable-row").click(function () {
             window.document.location = $(this).data("href");
+        });
+    });
+    jQuery(document).ready(function($) {
+        $(".checkbox-inline").click(function () {
+            var set_0 = '0.00';
+            var set_1_25 = '1.25';
+            var set_1_99 = '1.99';
+            var result_small = $("input[name='small']").is(":checked");
+            var result_middle = $("input[name='middle']").is(":checked");
+            var result_high = $("input[name='high']").is(":checked");
+            var delimiter = ', '
+
+            if (result_small && result_middle && result_high) {
+                var result = set_0 + delimiter + set_1_25 + delimiter + set_1_99;
+                $('input[name="prices"]').val(result);
+            } else if (result_small && result_middle) {
+                var result = set_0 + delimiter + set_1_25;
+                $('input[name="prices"]').val(result);
+            } else if (result_small && !result_middle && !result_high) {
+                var result = set_0;
+                $('input[name="prices"]').val(result);
+            } else if (result_small && result_high && !result_middle) {
+                var result = set_0 + delimiter + set_1_99;
+                $('input[name="prices"]').val(result);
+            } else if (result_middle && result_high && !result_small) {
+                var result = set_1_25 + delimiter + set_1_99;
+                $('input[name="prices"]').val(result);
+            } else if (result_small && result_high && !result_middle) {
+                var result = set_0 + delimiter + set_1_99;
+                $('input[name="prices"]').val(result);
+            } else if (result_high && !result_small && !result_middle) {
+                var result = set_1_99;
+                $('input[name="prices"]').val(result);
+            } else if (result_middle && !result_high && !result_small) {
+                var result = set_1_25;
+                $('input[name="prices"]').val(result);
+            } else if (result_small && result_high && !result_high) {
+                var result = set_0 + delimiter + set_1_25;
+                $('input[name="prices"]').val(result);
+            } else {
+                $('input[name="prices"]').val('');
+            }
         });
     });
     </script>

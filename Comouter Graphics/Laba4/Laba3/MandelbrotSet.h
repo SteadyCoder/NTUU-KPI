@@ -1,7 +1,3 @@
-//
-// Created by vpodilnyk on 17.12.16.
-//
-
 #ifndef GRAPHICS4_MANDELBROTSET_H
 #define GRAPHICS4_MANDELBROTSET_H
 

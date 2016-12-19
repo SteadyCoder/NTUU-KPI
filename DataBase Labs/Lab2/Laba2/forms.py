@@ -25,3 +25,7 @@ class DeveloperForm(forms.Form):
     name = forms.CharField(label='Name', max_length=50)
     company = forms.CharField(label='Company', max_length=50)
 
+class SearchForm(forms.Form):
+    price_min = forms.FloatField(label='Minimum price', required=False)
+    price_max = forms.FloatField(label='Maximum price', required=False)
+
