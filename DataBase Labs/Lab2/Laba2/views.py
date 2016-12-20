@@ -8,11 +8,6 @@ appController = AppController("app")
 developerController = DeveloperConrtoller("developer")
 userController = UserController("user")
 
-# downloadController.load('downloads.csv')
-# appController.load('apps.csv')
-# developerController.load('developer.csv')
-# userController.load('users.csv')
-
 def index(request):
     return HttpResponse("Works")
 
@@ -37,14 +32,13 @@ def apps_show(request):
                 res += appController.get_apps_with_condition("WHERE app_id =" + str(record["app_id"]))
         result = {'apps': res}
     elif ('prices' in request.GET) and (request.GET != ''):
-        print 'prices'
         key_prices = request.GET['prices']
-        print key_prices
-        condition = ""
         if (key_prices):
             condition = "WHERE price IN (" + key_prices + ");"
             res = appController.get_apps_with_condition(condition)
-        result = {'apps': res}
+            result = {'apps': res}
+        else:
+            result = {'apps': ()}
     else:
         result = {'apps': appController.get_all_apps()}
     return render(request, "Laba2/apps_table.html", result)
