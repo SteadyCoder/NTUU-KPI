@@ -6,7 +6,7 @@ In whole there are four tables which, create the main model of app; App, User, D
 
 ## Test results
 Input file example:
-![alt tag](https://raw.githubusercontent.com/SteadyCoder/NTUU-KPI/DataBase Labs/Lab2/master/test_pictures/Screen.png)
+![alt tag](https://raw.githubusercontent.com/SteadyCoder/NTUU-KPI/DataBase\ Labs/Lab2/master/test_pictures/Screen.png)
 
 ## Build with
 Python 2.7
