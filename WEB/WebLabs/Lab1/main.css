@@ -1,0 +1,144 @@
+* {
+    box-sizing: border-box;
+}
+
+#container {
+    width: auto;
+    background-color: orange;
+    margin: 0px 0;
+    overflow: hidden;
+    min-width: 800px;
+}
+
+html,
+body {
+    margin: 0;
+    padding: 0;
+}
+
+#nav {
+    height: 50px;
+}
+
+#header {
+    height: 200px;
+}
+
+#logo {
+    margin: 0px 20px 20px;
+    border-style: solid;
+    border-width: 1px;
+    border-color: white;
+    background-color: white;
+    box-shadow: 0 8px 6px -6px black;
+    text-align: center;
+    font-size: 3em;
+    color: royalblue;
+    line-height: 1.1em;
+    letter-spacing: -0.04em;
+}
+
+#sidebar {
+    float: right;
+    width: 280px;
+    margin-top: 5px;
+    margin-right: 20px;
+    border: solid white;
+    background-color: white;
+    border-width: 1px;
+    box-shadow: -6px 8px 6px -6px black;
+}
+
+#sidebar h3 {
+    font-family: "Lucida Console", Monaco, monospace;
+    padding: 10px;
+}
+
+#sidebar p {
+    font-family: "Lucida Console", Monaco, monospace;
+    line-height: 1.5em;
+    padding: 10px;
+}
+
+#footer {
+    height: 100px;
+    clear: both;
+    text-align: center;
+}
+
+#footer img {
+    display: inline-block;
+    width: 80px;
+    height: 80px;
+    padding: 10px;
+    margin-left: 10px;
+}
+
+#nav ul {
+    margin: 0 auto;
+    padding: 2px 0 0 0;
+    text-align: center;
+    width: 100%;
+}
+
+ul li {
+    list-style-type: none;
+    margin: 0;
+    padding: 3px 0;
+    display: inline;
+}
+
+#nav ul li a {
+    padding: 0 20px;
+    line-height: 40px;
+    text-transform: uppercase;
+    font-weight: bold;
+    text-decoration: none;
+}
+
+#nav ul li a:hover,
+#nav ul li a.active {
+    color: royalblue;
+}
+
+#content {
+    margin: 5px 320px 0px 20px;
+    border: solid white;
+    background-color: white;
+    border-width: 1px;
+    box-shadow: 0px 8px 6px -6px black;
+}
+
+#content h2 {
+    font-family: "Lucida Console", Monaco, monospace;
+    padding: 10px;
+}
+
+#content p {
+    font-family: "Lucida Console", Monaco, monospace;
+    line-height: 1.5em;
+    padding: 10px;
+}
+
+table {
+    margin: 20px auto;
+    overflow-y: scroll;
+    position: static;
+}
+
+thead th {
+    font-family: Georgia, serif;
+    font-size: 16px;
+    font-weight: 100;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+}
+
+th,
+td {
+    font-family: Georgia, serif;
+    font-weight: 400;
+    font-size: 18px;
+    padding: 20px;
+    text-align: left;
+}

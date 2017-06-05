@@ -1,0 +1,31 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml">
+<head></head>
+
+<title>Test</title>
+
+<body onload="JavaScript:gameModule.createButtons(10)">
+
+<p id="number"></p>
+
+	
+<script type="text/javascript">	
+	function func() {
+		document.getElementById("number").innerHTML = Math.floor((Math.random() * 10) + 1);
+	}
+
+	var timerId = setInterval(func, 2000)
+</script>
+
+<p id="result"></p>
+
+
+</body>
+
+</html>
+<meta http-equiv="Content-type" content="text/html; charset=UTF-8" /> <title>Concert</title>
+<meta http-equiv="Content-Language" content="uk" />
+<meta name="description" content="Опис" />
+<meta name="keywords" content="Concerts" />
+<meta name="author" content="Tkachenko Ivan" />
+<script type="text/javascript" src="control.js"></script>

@@ -1,0 +1,23 @@
+#view {
+    overflow: hidden;
+    div {
+        background-color: #444;
+        padding: 15px;
+        margin: 5px 0;
+        color: #fff;
+        font-size: 1.3em;
+        font-weight: bold;
+        height: 50px;
+        max-width: 100%;
+        span {
+            float: right;
+            opacity: .25;
+        }
+        &:nth-child(2n) {
+            background-color: #00B945;
+        }
+        &:nth-child(3n+2) {
+            background-color: #0776A0;
+        }
+    }
+}
