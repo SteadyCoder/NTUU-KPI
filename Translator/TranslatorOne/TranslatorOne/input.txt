@@ -2,16 +2,13 @@
 PROGRAM test;
 
 VAR x1: INTEGER;
-VAR y2: FLOAT;
+y2: FLOAT;
 
 BEGIN
 
-WHILE x1 < y2 DO
-    x1 = y2
-ENDWHILE;
-
-WHILE x1 <> y2 DO
-ENDWHILE~;
+IF x1 < y2 THEN
+x1 := y2 - 2
+ELSE
 
 (* *a*)
 

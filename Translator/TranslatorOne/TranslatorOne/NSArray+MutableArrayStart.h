@@ -9,5 +9,9 @@
 #import <Foundation/Foundation.h>
 
 @interface NSMutableArray (MutableArrayStart)
+- (NSMutableArray *)mutableArrayFromTheStartPoint:(NSUInteger)start;
+@end
 
+@interface NSArray (ArrayStart)
+- (NSMutableArray *)mutableArrayFromTheStartPoint:(NSUInteger)start;
 @end

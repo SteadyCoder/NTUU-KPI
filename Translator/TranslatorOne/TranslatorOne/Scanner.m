@@ -8,6 +8,11 @@
 
 #import "Scanner.h"
 
+const NSString * kTokenKeyNameId = @"id";
+const NSString * kTokenKeyNameRow = @"row";
+const NSString * kTokenKeyNameColumn = @"column";
+const NSString * kTokenKeyNameLexem = @"word";
+
 @interface NSString (ASCIIValue)
 
 - (NSUInteger)asciiValue;
@@ -44,7 +49,11 @@
                    @":": @202,
                    @"=": @203,
                    @">": @204,
-                   @"<": @205};
+                   @"<": @205,
+                   @"+": @206,
+                   @"-": @207,
+                   @"*": @208,
+                   @"/": @209};
     
     keywords = @{@"PROGRAM": @100,
                  @"BEGIN": @101,
@@ -57,7 +66,12 @@
                  @"ENDWHILE": @108,
                  @"<=": @109,
                  @"<>": @110,
-                 @">=": @111};
+                 @">=": @111,
+                 
+                 @"IF": @112,
+                 @"THEN": @113,
+                 @"ELSE": @114,
+                 @":=": @115};
     
     
     if (self) {
@@ -98,6 +112,10 @@
         _attributeArray[40] = @5;
         _attributeArray[41] = @6;
         
+        _attributeArray[42] = @3;
+        _attributeArray[43] = @3;
+        _attributeArray[45] = @3;
+        _attributeArray[47] = @3;
         _attributeArray[58] = @3;
         _attributeArray[59] = @3;
         _attributeArray[46] = @3;
@@ -138,7 +156,7 @@
     NSFileHandle *file = [NSFileHandle fileHandleForReadingAtPath:self.fileName];
     NSData *dataRead = [file readDataOfLength:1];
     
-    NSMutableArray<NSString *> *resultArray = [NSMutableArray array];
+    NSMutableArray<NSDictionary *> *resultArray = [NSMutableArray array];
     NSUInteger row = 1;
     NSUInteger column = 0;
     
@@ -170,7 +188,9 @@
                 [wordBuffer appendString:string];
                 string = [[NSString alloc] initWithData:dataRead encoding:NSUTF8StringEncoding];
             }
-            [resultArray addObject:[NSString stringWithFormat:@"%@: %ld %ld %@", [self addToContastantTable:wordBuffer], row, column, wordBuffer]];
+            [resultArray addObject:@{kTokenKeyNameId: [self addToContastantTable:wordBuffer], kTokenKeyNameRow: @(row), kTokenKeyNameColumn: @(column), kTokenKeyNameLexem: wordBuffer}];
+            
+            string = [[NSString alloc] initWithData:dataRead encoding:NSUTF8StringEncoding];
             column += wordBuffer.length - 1;
         } else if ([self.attributeArray[index] isEqual:@2]) {
             column += 1;
@@ -180,13 +200,28 @@
                 string = [[NSString alloc] initWithData:dataRead encoding:NSUTF8StringEncoding];
             }
 
-            [resultArray addObject:[NSString stringWithFormat:@"%@: %ld %ld %@", [self addToTableID:wordBuffer], row, column, wordBuffer]];
+            [resultArray addObject:@{kTokenKeyNameId: [self addToTableID:wordBuffer], kTokenKeyNameRow: @(row), kTokenKeyNameColumn: @(column), kTokenKeyNameLexem: wordBuffer}];
             column += wordBuffer.length - 1;
         } else if ([self.attributeArray[index] isEqual:@3]) {
-            column += 1;
-            [resultArray addObject:[NSString stringWithFormat:@"%@: %ld %ld %@", delimiters[string], row, column, string]];
+            [wordBuffer appendString:string];
+            
             dataRead = [file readDataOfLength:1];
             string = [[NSString alloc] initWithData:dataRead encoding:NSUTF8StringEncoding];
+            [wordBuffer appendString:string];
+            if ([keywords.allKeys containsObject:wordBuffer]) {
+                column += 2;
+                [resultArray addObject:@{kTokenKeyNameId: keywords[wordBuffer], kTokenKeyNameRow: @(row), kTokenKeyNameColumn: @(column),
+                                         kTokenKeyNameLexem: wordBuffer}];
+                dataRead = [file readDataOfLength:1];
+                string = [[NSString alloc] initWithData:dataRead encoding:NSUTF8StringEncoding];
+            } else {
+                column += 1;
+                NSString *firstCharacter = [NSString stringWithFormat:@"%c", [wordBuffer characterAtIndex:0]];
+                [resultArray addObject:@{kTokenKeyNameId: delimiters[firstCharacter], kTokenKeyNameRow: @(row), kTokenKeyNameColumn: @(column), kTokenKeyNameLexem: firstCharacter}];
+                dataRead = [file readDataOfLength:1];
+                string = [[NSString alloc] initWithData:dataRead encoding:NSUTF8StringEncoding];
+            }
+            
         } else if ([self.attributeArray[index] isEqual:@4]) {
             string = [[NSString alloc] initWithData:dataRead encoding:NSUTF8StringEncoding];
             [wordBuffer appendString:string];
@@ -196,13 +231,13 @@
             [wordBuffer appendString:string];
             if ([keywords.allKeys containsObject:wordBuffer]) {
                 column += 2;
-                [resultArray addObject:[NSString stringWithFormat:@"%@: %ld %ld %@", keywords[wordBuffer], row, column, wordBuffer]];
+                [resultArray addObject:@{kTokenKeyNameId: keywords[wordBuffer], kTokenKeyNameRow: @(row), kTokenKeyNameColumn: @(column), kTokenKeyNameLexem: wordBuffer}];
                 dataRead = [file readDataOfLength:1];
                 string = [[NSString alloc] initWithData:dataRead encoding:NSUTF8StringEncoding];
             } else {
                 column += 1;
                 NSString *firstCharacter = [NSString stringWithFormat:@"%c", [wordBuffer characterAtIndex:0]];
-                [resultArray addObject:[NSString stringWithFormat:@"%@: %ld %ld %@", delimiters[firstCharacter], row, column, firstCharacter]];
+                [resultArray addObject:@{kTokenKeyNameId: delimiters[firstCharacter], kTokenKeyNameRow: @(row), kTokenKeyNameColumn: @(column), kTokenKeyNameLexem: firstCharacter}];
             }
         } else if ([self.attributeArray[index] isEqual:@5]) {
             BOOL flag = NO;
@@ -235,12 +270,12 @@
                 string = [[NSString alloc] initWithData:dataRead encoding:NSUTF8StringEncoding];
             } else {
                 column += 1;
-                [resultArray addObject:[NSString stringWithFormat:@"%@: %ld %ld %@", @"ERROR", row, column, @"("]];
+                [resultArray addObject:@{kTokenKeyNameId: @"ERROR", kTokenKeyNameRow: @(row), kTokenKeyNameColumn: @(column), kTokenKeyNameLexem: @"("}];
             }
         } else if ([self.attributeArray[index] isEqualToNumber:@6]) {
             column += 1;
             string = [[NSString alloc] initWithData:dataRead encoding:NSUTF8StringEncoding];
-            [resultArray addObject:[NSString stringWithFormat:@"ERROR %ld %ld %@", row, column, string]];
+            [resultArray addObject:@{kTokenKeyNameId: @"ERROR", kTokenKeyNameRow: @(row), kTokenKeyNameColumn: @(column), kTokenKeyNameLexem: string}];
             dataRead = [file readDataOfLength:1];
             string = [[NSString alloc] initWithData:dataRead encoding:NSUTF8StringEncoding];
         }

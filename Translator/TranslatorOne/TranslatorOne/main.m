@@ -8,6 +8,7 @@
 
 #import <Foundation/Foundation.h>
 #import "Scanner.h"
+#import "Parser.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
@@ -16,12 +17,19 @@ int main(int argc, const char * argv[]) {
         
         @try {
             [fileScanner fileScanner];
-            NSLog(@"%@", fileScanner.resultTableArray);
+            //NSLog(@"%@", fileScanner.resultTableArray);
+            
+            Parser *parser = [[Parser alloc] init];
+            parser.listOfTokens = fileScanner.resultTableArray;
+            [parser execute_program];
+            [parser resultParserPrint:parser.tree andOrder:0];
+            
         } @catch (NSException *exception) {
-            NSLog(@"%@", fileScanner.resultTableArray);
+            //NSLog(@"%@", fileScanner.resultTableArray);
             NSLog(@"%@ %@ %@", exception.name, exception.reason, exception.userInfo);
         }
         
     }
+    
     return 0;
 }

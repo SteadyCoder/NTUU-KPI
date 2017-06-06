@@ -8,9 +8,14 @@
 
 #import <Foundation/Foundation.h>
 
+extern const NSString * kTokenKeyNameId;
+extern const NSString * kTokenKeyNameRow;
+extern const NSString * kTokenKeyNameColumn;
+extern const NSString * kTokenKeyNameLexem;
+
 @interface Scanner : NSObject
 
-@property (nonatomic, strong) NSArray<NSString *> *resultTableArray;
+@property (nonatomic, strong) NSArray<NSDictionary *> *resultTableArray;
 
 - (void)fileScanner;
 

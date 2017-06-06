@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		2C4952C01ECAC41900A064F1 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C4952BF1ECAC41900A064F1 /* main.m */; };
 		2C4952C81ECAC44700A064F1 /* Scanner.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C4952C71ECAC44700A064F1 /* Scanner.m */; };
+		2C76A7E71EE21175009BD6DB /* NSArray+MutableArrayStart.m in Sources */ = {isa = PBXBuildFile; fileRef = 2C76A7E61EE21175009BD6DB /* NSArray+MutableArrayStart.m */; };
+		2CA697011EDE18D4008D4C03 /* MyNode.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CA697001EDE18D4008D4C03 /* MyNode.m */; };
+		2CA697041EDE2634008D4C03 /* Parser.m in Sources */ = {isa = PBXBuildFile; fileRef = 2CA697031EDE2634008D4C03 /* Parser.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -28,6 +31,12 @@
 		2C4952BF1ECAC41900A064F1 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		2C4952C61ECAC44700A064F1 /* Scanner.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Scanner.h; sourceTree = "<group>"; };
 		2C4952C71ECAC44700A064F1 /* Scanner.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Scanner.m; sourceTree = "<group>"; };
+		2C76A7E51EE21175009BD6DB /* NSArray+MutableArrayStart.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSArray+MutableArrayStart.h"; sourceTree = "<group>"; };
+		2C76A7E61EE21175009BD6DB /* NSArray+MutableArrayStart.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSArray+MutableArrayStart.m"; sourceTree = "<group>"; };
+		2CA696FF1EDE18D4008D4C03 /* MyNode.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MyNode.h; sourceTree = "<group>"; };
+		2CA697001EDE18D4008D4C03 /* MyNode.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MyNode.m; sourceTree = "<group>"; };
+		2CA697021EDE2634008D4C03 /* Parser.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Parser.h; sourceTree = "<group>"; };
+		2CA697031EDE2634008D4C03 /* Parser.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Parser.m; sourceTree = "<group>"; };
 		2CFB83CE1ECB8AEB0061F4DC /* input.txt */ = {isa = PBXFileReference; lastKnownFileType = text; path = input.txt; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -64,6 +73,12 @@
 				2C4952BF1ECAC41900A064F1 /* main.m */,
 				2C4952C61ECAC44700A064F1 /* Scanner.h */,
 				2C4952C71ECAC44700A064F1 /* Scanner.m */,
+				2CA697021EDE2634008D4C03 /* Parser.h */,
+				2CA697031EDE2634008D4C03 /* Parser.m */,
+				2C76A7E51EE21175009BD6DB /* NSArray+MutableArrayStart.h */,
+				2C76A7E61EE21175009BD6DB /* NSArray+MutableArrayStart.m */,
+				2CA696FF1EDE18D4008D4C03 /* MyNode.h */,
+				2CA697001EDE18D4008D4C03 /* MyNode.m */,
 				2CFB83CE1ECB8AEB0061F4DC /* input.txt */,
 			);
 			path = TranslatorOne;
@@ -126,7 +141,10 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				2C76A7E71EE21175009BD6DB /* NSArray+MutableArrayStart.m in Sources */,
+				2CA697041EDE2634008D4C03 /* Parser.m in Sources */,
 				2C4952C81ECAC44700A064F1 /* Scanner.m in Sources */,
+				2CA697011EDE18D4008D4C03 /* MyNode.m in Sources */,
 				2C4952C01ECAC41900A064F1 /* main.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

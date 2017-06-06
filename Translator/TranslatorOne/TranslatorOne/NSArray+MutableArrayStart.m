@@ -6,11 +6,19 @@
 //  Copyright © 2017 Ivan. All rights reserved.
 //
 
-#import "NSMutableArray+MutableArrayStart.h"
+#import "NSArray+MutableArrayStart.h"
+
 
 @implementation NSMutableArray (MutableArrayStart)
 
 - (NSMutableArray *)mutableArrayFromTheStartPoint:(NSUInteger)start {
-    return [[NSMutableArray alloc] initWithArray:[self subarrayWithRange:NSMakeRange(start, self.count - 1)]];
+    return [[NSMutableArray alloc] initWithArray:[self subarrayWithRange:NSMakeRange(start, self.count - start)]];
+}
+@end
+
+@implementation NSArray (ArrayStart)
+
+- (NSMutableArray *)mutableArrayFromTheStartPoint:(NSUInteger)start {
+    return [[NSMutableArray alloc] initWithArray:[self subarrayWithRange:NSMakeRange(start, self.count - start)]];
 }
 @end
