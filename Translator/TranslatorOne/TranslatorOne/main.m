@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "Scanner.h"
 #import "Parser.h"
+#import "CodeGenerator.h"
 
 int main(int argc, const char * argv[]) {
     @autoreleasepool {
@@ -22,7 +23,10 @@ int main(int argc, const char * argv[]) {
             Parser *parser = [[Parser alloc] init];
             parser.listOfTokens = fileScanner.resultTableArray;
             [parser execute_program];
-            [parser resultParserPrint:parser.tree andOrder:0];
+            [parser resultParserPrint:parser.tree andOrder:@""];
+            
+            //CodeGenerator *generator = [[CodeGenerator alloc] initWithParser:parser andScanner:fileScanner];
+            //[generator generateCode:parser.tree];
             
         } @catch (NSException *exception) {
             //NSLog(@"%@", fileScanner.resultTableArray);

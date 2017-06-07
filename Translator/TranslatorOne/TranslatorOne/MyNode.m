@@ -36,7 +36,7 @@
 }
 
 + (instancetype)errorNodeWithData:(NSDictionary *)data {
-    NSString *stringData = [NSString stringWithFormat:@"row %ld; column %@", [data[kTokenKeyNameRow] integerValue] + 1, data[kTokenKeyNameColumn]];
+    NSString *stringData = [NSString stringWithFormat:@"row %ld; column %ld", [data[kTokenKeyNameRow] integerValue], [data[kTokenKeyNameColumn] integerValue]];
     return [[MyNode alloc] initWithData:stringData aRule:@"ERROR" aParent:nil];
 }
 

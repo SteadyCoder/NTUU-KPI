@@ -53,7 +53,9 @@ const NSString * kTokenKeyNameLexem = @"word";
                    @"+": @206,
                    @"-": @207,
                    @"*": @208,
-                   @"/": @209};
+                   @"/": @209,
+                   @"{": @210,
+                   @"}": @211};
     
     keywords = @{@"PROGRAM": @100,
                  @"BEGIN": @101,
@@ -120,6 +122,8 @@ const NSString * kTokenKeyNameLexem = @"word";
         _attributeArray[59] = @3;
         _attributeArray[46] = @3;
         _attributeArray[61] = @3;
+        _attributeArray[123] = @3;
+        _attributeArray[125] = @3;
         
         _attributeArray[60] = @4;
         _attributeArray[62] = @4;
@@ -189,7 +193,10 @@ const NSString * kTokenKeyNameLexem = @"word";
                 string = [[NSString alloc] initWithData:dataRead encoding:NSUTF8StringEncoding];
             }
             [resultArray addObject:@{kTokenKeyNameId: [self addToContastantTable:wordBuffer], kTokenKeyNameRow: @(row), kTokenKeyNameColumn: @(column), kTokenKeyNameLexem: wordBuffer}];
-            
+            if ([string isEqualToString:@"\n"]) {
+                row += 1;
+                column = 0;
+            }
             string = [[NSString alloc] initWithData:dataRead encoding:NSUTF8StringEncoding];
             column += wordBuffer.length - 1;
         } else if ([self.attributeArray[index] isEqual:@2]) {
@@ -217,6 +224,12 @@ const NSString * kTokenKeyNameLexem = @"word";
             } else {
                 column += 1;
                 NSString *firstCharacter = [NSString stringWithFormat:@"%c", [wordBuffer characterAtIndex:0]];
+                NSString *secondCharacter = [NSString stringWithFormat:@"%c", [wordBuffer characterAtIndex:1]];
+                if (secondCharacter && [secondCharacter  isEqual: @"\n"]) {
+                    row += 1;
+                    column = 0;
+                }
+                
                 [resultArray addObject:@{kTokenKeyNameId: delimiters[firstCharacter], kTokenKeyNameRow: @(row), kTokenKeyNameColumn: @(column), kTokenKeyNameLexem: firstCharacter}];
                 dataRead = [file readDataOfLength:1];
                 string = [[NSString alloc] initWithData:dataRead encoding:NSUTF8StringEncoding];

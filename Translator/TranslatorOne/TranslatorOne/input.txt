@@ -1,15 +1,18 @@
 (**roma***)
 PROGRAM test;
-
 VAR x1: INTEGER;
 y2: FLOAT;
-
 BEGIN
+IF x1 < y2 THEN {
+    IF x1 > y2 THEN {
+x1 := 3 + y2
+}
+ELSE {
 
-IF x1 < y2 THEN
-x1 := y2 - 2
-ELSE
-
+}
+}
+ELSE {
+y2 := 1 + 2
+}
 (* *a*)
-
 END.
